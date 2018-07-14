@@ -82,7 +82,7 @@ def build_G(image,class_number,is_training,reuse=False,trainable=False):
                     conv8_1=conv(concat8,128,3,1,name='conv8_1')
                     conv8_2=conv(conv8_1,128,3,1,name='conv8_2')
                     
-                    # block 3
+                    # block 4
                     up9=upsample(conv8_2,tf.shape(conv1_1)[1:3])
                     concat9=tf.concat([up9,conv1_1],axis=-1)
                     conv9_1=conv(concat9,64,3,1,name='conv9_1')
