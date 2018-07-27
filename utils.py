@@ -62,12 +62,12 @@ def update_lr(learning_rate,learning_rate_decay_steps,learning_rate_decay_rate,g
                                         learning_rate_decay_rate,staircase=True)
     return decay_lr
 
-def update_optim(loss,decay_lr,global_step=None):
+def update_optim(loss,decay_lr,var_list,global_step=None):
     update_ops=tf.get_collection(tf.GraphKeys.UPDATE_OPS)
     with tf.control_dependencies(update_ops):
         optimizer=tf.train.AdamOptimizer(decay_lr)
         # delete global_step,because global_step auto add 1,because we want to use G weight share and same lr
-        train_op=optimizer.minimize(loss,global_step=global_step) 
+        train_op=optimizer.minimize(loss,var_list=var_list,global_step=global_step) 
     return train_op
     
 
