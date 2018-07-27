@@ -67,7 +67,7 @@ def main():
     '''
     global_step_G=tf.Variable(tf.constant(0))
     lr_g=update_lr(learning_rate_G,max_iters//4,0.1,global_step_G)
-    train_op_G=update_optim(Loss_Seg_Adv,lr_g,g_vars,global_step_G)
+    train_op_G=update_optim(Loss_Seg_Adv,lr_g,g_vars,global_step_G)#训练时，只更新输入的g_vars，d_vars不更新。因此，计算semi_loss时，也不更新D
     
     #lr_g=update_lr(learning_rate_G,max_iters//4,0.1,global_step_G)
     train_op_Semi=update_optim(Loss_Semi,lr_g,g_vars) # loss_semi's lr = loss_seg_adv's lr
