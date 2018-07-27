@@ -57,21 +57,24 @@ def main():
     with tf.name_scope('loss_d'):
         Loss_D=Loss_D_fake+Loss_D_real#############
         tf.summary.scalar('loss_d',Loss_D)
-    
+    # get all g d vars list
+    all_vars=tf.trainable_variables()
+    g_vars=[var for var in all_vars if 'u_net' in var.name]
+    d_vars=[var for var in all_vars if 'FCDiscriminator' in var.name]
     
     ''' adjust lr ; loss_semi with loss_seg_adv same lr 
         because it's a graph , global_step is a Variable ,update same time.
     '''
     global_step_G=tf.Variable(tf.constant(0))
     lr_g=update_lr(learning_rate_G,max_iters//4,0.1,global_step_G)
-    train_op_G=update_optim(Loss_Seg_Adv,lr_g,global_step_G)
+    train_op_G=update_optim(Loss_Seg_Adv,lr_g,g_vars,global_step_G)
     
     #lr_g=update_lr(learning_rate_G,max_iters//4,0.1,global_step_G)
-    train_op_Semi=update_optim(Loss_Semi,lr_g) # loss_semi's lr = loss_seg_adv's lr
+    train_op_Semi=update_optim(Loss_Semi,lr_g,g_vars) # loss_semi's lr = loss_seg_adv's lr
     
     global_step_D=tf.Variable(tf.constant(0))
     lr_d=update_lr(learning_rate_D,max_iters//4,0.1,global_step_D)
-    train_op_D=update_optim(Loss_D,lr_d,global_step_D)
+    train_op_D=update_optim(Loss_D,lr_d,d_vars,global_step_D)
     
     sess=tf.Session()
     merged=tf.summary.merge_all()
