@@ -26,7 +26,7 @@ for i in range(len(names)):
     img=np.expand_dims(img,axis=0)# 1 H W 3
     pred=tf.argmax(G_softmax,axis=-1)
     predict=np.array(sess.run(pred,feed_dict={image:img,is_training:False}))[0]# H*W
-    cv2.imwrite(os.path.join(test_path,'pred',names[i]))
+    cv2.imwrite(os.path.join(test_path,'pred',names[i]),predict)
 
 sess.close()    
 
