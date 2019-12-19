@@ -7,3 +7,8 @@ python:3.5 ; tensorflow 1.6
 主函数写的一般，仅供参考。
 
 复现论文 ： “ADVERSARIAL LEARNING FOR SEMI-SUPERVISED SEMANTIC SEGMENTATION”
+
+
+分享 建筑物语义分割数据集： building-segmentation-dataset
+
+https://github.com/gengyanlei/build_segmentation_dataset
